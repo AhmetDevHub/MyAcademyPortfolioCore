@@ -1,0 +1,60 @@
+﻿@model List<Project>
+@{
+    ViewData["Title"] = "Projelerim";
+    Layout = "~/Views/AdminLayout/Layout.cshtml";
+    int count = 0;
+}
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>Proje Resmi</th>
+        <th>Proje Adı</th>
+        <th>Açıklama</th>
+        <th>Github Url</th>
+        <th>Kategori</th>
+        <th>İşlemler</th>
+    </tr>
+   
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <th><img src="@item.ImgUrl" style="height:75px; width:75px;" /></th>
+            <th>@item.ProjectName</th>
+            <th>@item.Description</th>
+            <th><a href="@item.GitHubUrl">Github Link</a></th>
+            <th>@item.Category.CategoryName</th>
+            <td>
+
+                <button onclick="deleteProject(@item.ProjectId)"  class="btn btn-outline-danger">Sil</button>
+                <a href="/Project/UpdateProject/@item.ProjectId" class="btn btn-outline-info">Güncelle</a>
+               
+            </td>
+        </tr>
+    }
+</table>
+
+<a href="/Project/CreateProject" class="btn btn-outline-primary">Yeni Proje Oluştur</a>
+
+<script>
+
+    function deleteProject (id) {
+
+        Swal.fire({
+            title: "Silmek İstediğinize Emin Misiniz?",
+            text: "Bu İşlemi Geri Alamazsınız!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil !",
+            cancelButtonText:"İptal !!!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Project/DeleteProject/" + id;
+            }
+        });
+    }
+</script>
