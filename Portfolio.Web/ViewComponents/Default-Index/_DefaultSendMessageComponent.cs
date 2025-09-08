@@ -2,7 +2,7 @@
 
 namespace Portfolio.Web.ViewComponents.Default_Index
 {
-    public class _DefaultSendMessageComponant:ViewComponent
+    public class _DefaultSendMessageComponent:ViewComponent
     {
         public IViewComponentResult Invoke()
         {
