@@ -1,0 +1,34 @@
+﻿@model List<Skill>
+@*
+   Skill Default
+*@
+<section id="skills" class="skills section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Yeteneklerim</h2>
+        <p>Geliştirmiş ve geliştirmekte olduğum progralama yeteneklerim</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row skills-content skills-animation">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6">
+
+                    <div class="progress">
+                        <span class="skill"><span>@item.Title</span> <i class="val">@item.Percentage</i></span>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@item.Percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                </div>
+            }                     
+        </div>
+
+    </div>
+
+</section>

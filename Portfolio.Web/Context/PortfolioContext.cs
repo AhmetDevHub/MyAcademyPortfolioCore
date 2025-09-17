@@ -22,7 +22,9 @@ namespace Portfolio.Web.Context
 		public DbSet<Skill> Skills { get; set; }
 		public DbSet<Testimonial> Testimonials { get; set; }
 		public DbSet<UserMessage> UserMessage { get; set; }
-		public DbSet<ContactInfo> ContactInfo { get; set; }
+        public DbSet<ContactInfo> ContactInfo { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
 
-	}
+    }
 }

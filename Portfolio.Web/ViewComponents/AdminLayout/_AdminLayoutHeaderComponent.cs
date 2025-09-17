@@ -6,6 +6,7 @@ namespace Portfolio.Web.ViewComponents.AdminLayout
     {
         public IViewComponentResult Invoke()
         {
+            ViewBag.username = HttpContext.Session.GetString("UserName");
             return View();
         }
     }

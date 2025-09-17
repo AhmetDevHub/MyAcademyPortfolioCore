@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Portfolio.Web.Context;
 
 namespace Portfolio.Web.Controllers
 {
+  
     public class StatisticsController(PortfolioContext context) : Controller
     {
         public IActionResult Index()

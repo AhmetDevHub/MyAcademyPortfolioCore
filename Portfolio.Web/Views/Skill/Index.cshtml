@@ -1,0 +1,42 @@
+﻿
+
+@model List<Skill>
+@{
+    ViewData["Title"] = "Yeteneklerim";
+    Layout = "~/Views/AdminLayout/Layout.cshtml";
+    int count = 0;
+}
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>Seviye</th>
+        <th>İşlemler</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td>@item.Title</td>
+            <td>
+                @item.Percentage %
+                <span>
+                    <div class="progress" style="height: 6px">
+                        <div class="progress-bar bg-success" style="width: @item.Percentage%"></div>
+                    </div>
+                </span>
+            </td>
+            <td>
+                <a href="/Skill/DeleteSkill/@item.SkillId" class="btn btn-outline-danger">Sil</a>
+                <a href="/Skill/UpdateSkill/@item.SkillId" class="btn btn-outline-info">Güncelle</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<a href="/Skill/CreateSkill/" class="btn btn-outline-primary">Yeni Yetenek Oluştur</a>
+

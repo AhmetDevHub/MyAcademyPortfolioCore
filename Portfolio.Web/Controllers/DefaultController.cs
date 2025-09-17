@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Portfolio.Web.Context;
 using Portfolio.Web.Entities;
 
 namespace Portfolio.Web.Controllers
 {
+    [AllowAnonymous] //authorsize den muhaf tuttuk
     public class DefaultController(PortfolioContext context) : Controller
     {
         public IActionResult Index()

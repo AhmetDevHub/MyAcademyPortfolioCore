@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Portfolio.Web.Context;
 
 namespace Portfolio.Web
@@ -16,32 +18,58 @@ namespace Portfolio.Web
 			//context sýnýfýný programcs e tanýtýyoruz yukarýdaki de ayný sonuç farklý iþlem !!!
 			builder.Services.AddDbContext<PortfolioContext>();
 
+            builder.Services.AddDistributedMemoryCache();  //Hafýzadatutmak için
 
 
-			builder.Services.AddControllersWithViews();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
-			var app = builder.Build();
-
-			// Configure the HTTP request pipeline.
-			if (!app.Environment.IsDevelopment())
+            builder.Services.AddControllersWithViews(opt =>
 			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
+				opt.Filters.Add(new AuthorizeFilter());
+			});
 
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
+			
 
-			app.UseRouting();
+			
 
-			app.UseAuthorization();
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.Cookie.Name = "PortfolioCookie";
+					options.LoginPath = "/Auth/Login";
+					options.LogoutPath = "/Auth/Logout";
+					options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+					options.SlidingExpiration = true;
+				});
 
-			app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+            var app = builder.Build();
 
-			app.Run();
-		}
-	}
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles(); // Statik dosyalarý yükle
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseSession();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+
+        }
+    }
 }
